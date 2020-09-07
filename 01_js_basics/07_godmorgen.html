@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+
+    <script>
+        sigGodmorgen();
+
+        function sigGodmorgen() {
+            let time = new Date().getHours();
+            let message;
+
+            if (time <= 4) {
+                message = `Godnat, klokken er ${time}`;
+            } else if (time <= 9) {
+                message = `Godmorgen, klokken er ${time}`;
+            } else if (time <= 17) {
+                message = `Goddag, klokken er ${time}`;
+            } else {
+                message = `Godaften, klokken ${time}`;
+            }
+
+            console.log(message);
+        }
+
+    </script>
+</body>
+
+</html>

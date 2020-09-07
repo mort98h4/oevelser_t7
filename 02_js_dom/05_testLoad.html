@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+    <style>
+        * {
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        section {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        h2 {
+            flex-basis: 1000px;
+            flex-grow: 1;
+            padding: 11px;
+        }
+
+        article {
+            flex-basis: 500px;
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #000000;
+        }
+
+        h1,
+        footer {
+            text-align: center;
+        }
+
+        header,
+        footer {
+            padding: 10px 0;
+            border: 1px solid #000000;
+        }
+
+    </style>
+</head>
+
+<body>
+    <main>
+        <header>
+            <h1>Titel</h1>
+        </header>
+        <section>
+            <h2>Undertitel</h2>
+            <article>
+                <img src="https://placeimg.com/640/480/any" alt="">
+                <h3>Article 1</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis, laborum placeat vel amet quisquam, adipisci pariatur fugiat illum nostrum doloribus. Veritatis laboriosam sequi incidunt nesciunt odio? Deleniti quaerat, aperiam soluta eum dolor. Cum magnam, maxime fugiat. Ullam unde voluptatibus magnam consequuntur molestiae, est cum aliquid odio quibusdam alias quae nobis!</p>
+            </article>
+            <article>
+                <img src="https://placeimg.com/640/480/any" alt="">
+                <h3>Article 2</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis, laborum placeat vel amet quisquam, adipisci pariatur fugiat illum nostrum doloribus. Veritatis laboriosam sequi incidunt nesciunt odio? Deleniti quaerat, aperiam soluta eum dolor. Cum magnam, maxime fugiat. Ullam unde voluptatibus magnam consequuntur molestiae, est cum aliquid odio quibusdam alias quae nobis!</p>
+            </article>
+        </section>
+    </main>
+    <footer>Det her er min footer</footer>
+
+    <script>
+        const main = document.querySelector("main");
+        console.log(main);
+        const header = document.querySelector("header");
+        console.log(header);
+        const overskrift = document.querySelector("h1");
+        console.log(overskrift.textContent);
+        const section = document.querySelector("section");
+        console.log(section);
+        const underOverskrift = document.querySelector("h2");
+        console.log(underOverskrift.textContent);
+        const article1 = document.querySelector("article:nth-child(2)");
+        console.log("article1", article1);
+        const article2 = document.querySelector("article:nth-child(3)");
+        console.log("article2", article2);
+        const image1 = document.querySelector("article:nth-child(2) img");
+        console.log("image1", image1);
+        const image2 = document.querySelector("article:nth-child(3) img");
+        console.log("image2", image2);
+        const underUnderOverskrift1 = document.querySelector("article:nth-child(2) h3");
+        console.log(underUnderOverskrift1.textContent);
+        const underUnderOverskrift2 = document.querySelector("article:nth-child(3) h3");
+        console.log(underUnderOverskrift2.textContent);
+        const text1 = document.querySelector("article:nth-child(2) p");
+        console.log(text1.textContent);
+        const text2 = document.querySelector("article:nth-child(3) p");
+        console.log(text2.textContent);
+        const footer = document.querySelector("footer");
+        console.log(footer);
+
+        overskrift.textContent = "Dette er en ny titel";
+        underUnderOverskrift1.textContent = "Dette er en ny underUnderOverskrift textContent";
+        underUnderOverskrift2.innerHTML = "<i>Dette er en ny underUnderOverskrift med innerHTML</i>";
+
+        image1.src = "https://placeimg.com/640/480/people";
+        image1.alt = "Dette billede kan kun vise et menneske";
+        image2.alt = "Dette billede kan vise alt muligt";
+
+        let article3 = document.createElement("article");
+        section.appendChild(article3);
+
+        let image3 = document.createElement("img");
+        image3.src = "https://placeimg.com/640/480/arch";
+        image3.alt = "Dette billede kan kun vise arkitektur";
+        article3.appendChild(image3);
+
+        let h3 = document.createElement("h3");
+        article3.appendChild(h3);
+        let underUnderOverskrift3 = document.createTextNode("Dette er en ny underUnderOverskrift med createTextNode");
+        h3.appendChild(underUnderOverskrift3);
+
+        let p = document.createElement("p");
+        article3.appendChild(p);
+        let text3 = document.createTextNode("Dette er en ny text med createTextNode");
+        p.appendChild(text3);
+
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            console.log("DOM'en er loadet");
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON</title>
+    <style>
+        article {
+            border: 1px solid #000000;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="container"></section>
+    <template>
+        <article class="person">
+            <img src="">
+            <h2 class="navn"></h2>
+            <p class="efternavn"></p>
+            <p class="job"></p>
+        </article>
+    </template>
+    <script>
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            console.log("start");
+
+            const url = "https://spreadsheets.google.com/feeds/list/1mtHhpoEkYqVqr1TSnKQ1_sQZWI7FRVjcw3H1oatDOVQ/od6/public/values?alt=json";
+
+            async function hentData(url) {
+                const resultat = await fetch(url);
+                const json = await resultat.json();
+                vis(json);
+            }
+
+            function vis(personer) {
+                console.log(personer);
+
+                const container = document.querySelector("#container");
+                const template = document.querySelector("template");
+
+                personer.feed.entry.forEach(person => {
+                    let klon = template.cloneNode(true).content;
+                    klon.querySelector("img").src = person.gsx$billede.$t;
+                    klon.querySelector(".navn").textContent = person.gsx$navn.$t;
+                    klon.querySelector(".efternavn").textContent = person.gsx$efternavn.$t;
+                    klon.querySelector(".job").textContent = person.gsx$job.$t;
+                    container.appendChild(klon);
+                })
+            }
+
+            hentData(url);
+
+        }
+    </script>
+</body></html>

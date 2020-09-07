@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07_01_01_persongalleri</title>
+    <style>
+        body {
+            background-color: #ececec;
+            font-family: sans-serif;
+            text-align: center;
+        }
+
+        button {
+            margin-bottom: 10px;
+        }
+
+        .valgt {
+            text-decoration: underline;
+        }
+
+        section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-gap: 5px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        article {
+            background-color: #ffffff;
+            border: 1px solid #000000;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        article p {
+            text-align: left;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1>07_01_01 Persongalleri</h1>
+    <nav>
+        <button class="filter valgt" data-køn="alle">Alle</button>
+        <button class="filter" data-køn="m">Mænd</button>
+        <button class="filter" data-køn="k">Kvinder</button>
+        <button class="filter" data-køn="andet">Andet</button>
+    </nav>
+    <section id="container">
+
+    </section>
+    <template>
+        <article class="person">
+            <h2 class="navn"></h2>
+            <p class="hobby">Hobby: </p>
+            <p class="job">Job: </p>
+            <img src="">
+        </article>
+    </template>
+    <script>
+        let personer;
+        let filter = "alle";
+        document.addEventListener("DOMContentLoaded", start);
+
+        async function start() {
+            console.log("start");
+            const JSONData = await fetch("https://spreadsheets.google.com/feeds/list/1mtHhpoEkYqVqr1TSnKQ1_sQZWI7FRVjcw3H1oatDOVQ/od6/public/values?alt=json");
+            personer = await JSONData.json();
+            addEventListenersToButtons();
+            visPersoner();
+        }
+
+        function visPersoner() {
+            console.log("visPersoner");
+            const container = document.querySelector("#container");
+            const template = document.querySelector("template");
+            container.innerHTML = "";
+
+            personer.feed.entry.forEach(person => {
+                if (filter == "alle" || filter == person.gsx$køn.$t.toLocaleLowerCase()) {
+                    console.log(person);
+                    let klon = template.cloneNode(true).content;
+                    klon.querySelector("img").src = person.gsx$billede.$t;
+                    klon.querySelector(".navn").textContent = person.gsx$navn.$t + ` ${person.gsx$efternavn.$t}`;
+                    klon.querySelector(".hobby").textContent += person.gsx$hobby.$t;
+                    klon.querySelector(".job").textContent += person.gsx$job.$t;
+                    container.appendChild(klon);
+                }
+
+            })
+        }
+
+        function addEventListenersToButtons() {
+            document.querySelectorAll(".filter").forEach((button) => {
+                button.addEventListener("click", filterButtons);
+            });
+        }
+
+        function filterButtons() {
+            filter = this.dataset.køn;
+            visPersoner();
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array</title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <ul id="display"></ul>
+    <script>
+        let playlist = ["Sober", "The Runner", "Mountain at my Gates", "Tieduprightnow", "Kangaroo Court", "Safe and Sound", "Charlemagne", "Found What I've Been Looking For", "The Killing Moon", "Electric Feel"];
+        playlist.forEach(sang => {
+            document.querySelector("#display").innerHTML += `${sang} <br>`;
+        })
+
+    </script>
+</body>
+
+</html>

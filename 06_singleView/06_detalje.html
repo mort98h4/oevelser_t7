@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07_01_01_persongalleri</title>
+    <style>
+        body {
+            background-color: #ececec;
+            font-family: sans-serif;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: left;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        article p {
+            text-align: left;
+        }
+
+        #popup {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, .8);
+            overflow: scroll;
+        }
+
+        #popup article {
+            width: 80vw;
+            background-color: #ffffff;
+            margin: 4rem auto;
+            border-radius: 5px;
+        }
+
+        .popup_top {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        #luk {
+            padding: 10px;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .popup_bottom {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .popup_img {
+            flex-grow: 1;
+            flex-basis: 45%;
+            padding: 10px;
+        }
+
+        .popup_text {
+            flex-grow: 1;
+            flex-basis: 45%;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="popup">
+        <article>
+            <div class="popup_top">
+                <div id="luk">X</div>
+            </div>
+            <div class="popup_bottom">
+                <div class="popup_img">
+                    <img src="" alt="">
+                </div>
+                <div class="popup_text">
+                    <h2 class=""></h2>
+                    <p>Køn: <span class="køn"></span></p>
+                    <p>Alder: <span class="alder"></span></p>
+                    <p>Religion: <span class="religion"></span></p>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get("id");
+
+        let personer;
+        const popup = document.querySelector("#popup");
+
+        document.addEventListener("DOMContentLoaded", start);
+
+        async function start() {
+            console.log("start");
+            const JSONData = await fetch("https://spreadsheets.google.com/feeds/list/1mtHhpoEkYqVqr1TSnKQ1_sQZWI7FRVjcw3H1oatDOVQ/od6/public/values?alt=json");
+            personer = await JSONData.json();
+            visPersoner();
+        }
+
+        function visPersoner() {
+            console.log("visPersoner");
+
+            personer.feed.entry.forEach(person => {
+                if (id == person.gsx$id.$t) {
+                    visDetaljer(person);
+                }
+
+            })
+        }
+
+        document.querySelector("#luk").addEventListener("click", () => history.back());
+
+        function visDetaljer(person) {
+            console.log(person);
+            popup.querySelector("img").src = person.gsx$billede.$t;
+            popup.querySelector("h2").textContent = person.gsx$navn.$t + ` ${person.gsx$efternavn.$t}`;
+            popup.querySelector(".køn").textContent = person.gsx$køn.$t;
+            popup.querySelector(".alder").textContent = person.gsx$alder.$t;
+            popup.querySelector(".religion").textContent = person.gsx$religion.$t;
+        }
+    </script>
+</body></html>
